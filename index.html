@@ -589,24 +589,45 @@
             respostas: respostas
         };
 
-        google.script.run
-            .withSuccessHandler(function(response) {
+        const endpointAppsScript = "https://script.google.com/macros/s/AKfycbzZU2eWnJqjRmQWAuuAHtgI1CHBWZmlau3uKodr4Lz9w7znxL88BMi4EJgFLvPZ-6mr/exec";
+        const botaoEnviar = document.querySelector(".submit-btn");
+        botaoEnviar.disabled = true;
+        botaoEnviar.innerText = "ENVIANDO...";
+
+        fetch(endpointAppsScript, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(dadosEnvio)
+        })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("Falha HTTP " + response.status);
+                }
+                return response.text();
+            })
+            .then(function() {
                 document.getElementById("feedback").style.display = "block";
                 document.getElementById("feedback").className = "feedback success";
                 document.getElementById("feedback").innerText = "Prova enviada com sucesso! Obrigado, " + nome + ".";
                 document.getElementById("provaForm").reset();
                 document.querySelectorAll('.alternative-btn').forEach(b => b.classList.remove('selected'));
-                respostas.Q1 = ""; respostas.Q2 = ""; respostas.Q4 = ""; respostas.Q5 = ""; respostas.Q7 = ""; respostas.Q8 = ""; respostas.Q10 = "";
+                for (let key in respostas) {
+                    respostas[key] = "";
+                }
                 document.getElementById("ra").value = "";
                 document.getElementById("dig_ra").value = "";
                 document.getElementById("email").value = "";
             })
-            .withFailureHandler(function(error) {
+            .catch(function(error) {
+                console.error("Erro no envio ao Apps Script:", error);
                 document.getElementById("feedback").style.display = "block";
                 document.getElementById("feedback").className = "feedback error";
                 document.getElementById("feedback").innerText = "Erro ao enviar. Tente novamente.";
             })
-            .processarRespostas(dadosEnvio);
+            .finally(function() {
+                botaoEnviar.disabled = false;
+                botaoEnviar.innerText = "ENVIAR";
+            });
     }
 </script>
 
