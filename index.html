@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova Paulista - Ciências - 7º Ano - 3º Bimestre</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d47a1, #2e7d32);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px solid #2e7d32;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            color: #2e7d32;
+            margin: 0;
+            font-size: 24px;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .atividade-title {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+        .atividade-title h2 {
+            color: #2e7d32;
+            margin: 0 0 5px 0;
+            font-size: 22px;
+        }
+        .atividade-title h3 {
+            color: #1b5e20;
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        /* ALTERAÇÃO: Grid de 7 colunas para ajustar as larguras proporcionalmente */
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        /* Turma: 1/7 */
+        .student-info > div:nth-child(1) { grid-column: span 1; }
+        /* Nome: 6/7 (espaço ideal para nomes longos) */
+        .student-info > div:nth-child(2) { grid-column: span 6; }
+        /* RA: 5/7 (reduzido para ficar proporcional aos 9 dígitos) */
+        .student-info > div:nth-child(3) { grid-column: span 5; }
+        /* Dig. RA: 2/7 (levemente maior, mas ainda compacto) */
+        .student-info > div:nth-child(4) { grid-column: span 2; }
+        /* E-mail: 5/7 (ajustado para manter a linha equilibrada) */
+        .student-info > div:nth-child(5) { grid-column: span 5; }
+        /* Data: 2/7 (aumentado para caber "14/09/2026" sem cortar) */
+        .student-info > div:nth-child(6) { grid-column: span 2; }
+
+        .student-info label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #1b5e20;
+        }
+        .student-info select, .student-info input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .student-info input {
+            background-color: #f1f8e9;
+            color: #555;
+        }
+        
+        .question-block {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 6px 0 #0d47a1, 0 10px 15px rgba(0,0,0,0.2);
+        }
+        .question-block h3 {
+            margin-top: 0;
+            color: #2e7d32;
+            font-size: 18px;
+        }
+        .question-image {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .question-image img {
+            max-width: 100%;
+            height: auto;
+            max-height: 250px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .alternative-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #2e7d32;
+            transition: all 0.1s ease;
+            text-align: left;
+            font-weight: 500;
+        }
+        .alternative-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 transparent;
+            background-color: #1b5e20;
+            color: white;
+            font-weight: bold;
+        }
+        .alternative-btn.selected {
+            background-color: #0d47a1; /* Azul escuro */
+            color: white;
+            font-weight: bold;
+            transform: translateY(6px);
+            box-shadow: 0 0 0 transparent;
+        }
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            box-sizing: border-box;
+            font-family: inherit;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .submit-btn, .clear-btn {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            transition: all 0.1s ease;
+        }
+        .submit-btn {
+            background-color: #2e7d32;
+            color: white;
+            box-shadow: 0 6px 0 #1b5e20;
+        }
+        .submit-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 transparent;
+        }
+        .clear-btn {
+            background-color: #c62828;
+            color: white;
+            box-shadow: 0 6px 0 #8e0000;
+        }
+        .clear-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 transparent;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+        .success { color: #2e7d32; }
+        .error { color: #c62828; }
+
+        .bioma-col {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>E.E. PROFª WANDA MASCAGNI DE SÁ</h1>
+        <p>Prova Paulista - Ciências - 7º Ano - 3º Bimestre</p>
+    </header>
+
+    <div class="student-info">
+        <div>
+            <label for="turma">Turma:</label>
+            <select id="turma" required onchange="carregarAlunos()">
+                <option value="">Selecione a Turma</option>
+                <option value="7ºAno A">7ºAno A</option>
+                <option value="7ºAno B">7ºAno B</option>
+            </select>
+        </div>
+        <div>
+            <label for="nome">Nome do Aluno:</label>
+            <select id="nome" required onchange="preencherDadosAluno()">
+                <option value="">Selecione o Nome</option>
+            </select>
+        </div>
+        <div>
+            <label for="ra">RA:</label>
+            <input type="text" id="ra" readonly placeholder="Preenchido automaticamente">
+        </div>
+        <div>
+            <label for="dig_ra">Dig. RA:</label>
+            <input type="text" id="dig_ra" readonly placeholder="Preenchido automaticamente">
+        </div>
+        <div>
+            <label for="email">E-mail Institucional:</label>
+            <input type="text" id="email" readonly placeholder="Preenchido automaticamente">
+        </div>
+        <div>
+            <label for="data">Data:</label>
+            <input type="text" id="data" readonly>
+        </div>
+    </div>
+
+    <div class="atividade-title">
+        <h2>ATIVIDADE DE CIÊNCIAS (3º BIMESTRE)</h2>
+        <h3>REVISÃO PROVA PAULISTA</h3>
+    </div>
+
+    <form id="provaForm" onsubmit="enviarRespostas(event)">
+        <!-- Questão 1 -->
+        <div class="question-block">
+            <h3>Questão 1 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q1-aquatic-ecosystem.jpg" alt="Recife de Corais">
+            </div>
+            <p>Estes organismos podem viver em água doce, como rios, lagos e nascentes, ou de água salgada, como oceanos e mares. Esses ecossistemas apresentam fatores físicos diversos e importantes, como a luz solar, a salinidade, a temperatura e a presença de oxigênio dissolvido na água. Considerando o ecossistema acima descrito, a alternativa que apresenta um fator biótico e um fator abiótico presentes em ecossistemas aquáticos é:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q1', 'A')">A) Plantas aquáticas (fator biótico) e luz solar (fator abiótico).</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q1', 'B')">B) Oxigênio dissolvido (fator biótico) e algas (fator abiótico).</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q1', 'C')">C) Plâncton (fator abiótico) e temperatura da água (fator biótico).</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q1', 'D')">D) Bactérias (fator abiótico) e salinidade da água (fator biótico).</button>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-block">
+            <h3>Questão 2 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q2-atlantic-forest.jpg" alt="Mata Atlântica">
+            </div>
+            <p>82% das espécies de árvores que só ocorrem na Mata Atlântica estão ameaçadas de extinção. Estudo liderado por pesquisadores da USP avaliou categorias de risco de todas as espécies arbóreas da Mata Atlântica; 13 espécies exclusivas daquele bioma podem já ter sido extintas. Uma das principais causas da ameaça de extinção dos seres vivos presentes na Mata Atlântica é:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q2', 'A')">A) A existência de muitas áreas protegidas.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q2', 'B')">B) O desmatamento e a urbanização.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q2', 'C')">C) A falta de chuvas durante o ano.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q2', 'D')">D) A presença de grandes rios.</button>
+            </div>
+        </div>
+
+        <!-- Questão 3 (Dissertativa) -->
+        <div class="question-block">
+            <h3>Questão 3 (Dissertativa)</h3>
+            <div class="question-image">
+                <img src="assets/q3-biome.jpg" alt="Cerrado">
+            </div>
+            <p>Leia a definição a seguir: <em>“Bioma é uma unidade ecológica de grande escala, caracterizada por um tipo de vegetação dominante, uma fauna e outros organismos vivos associados, bem como por um clima específico e outras condições ambientais semelhantes, como o solo e a altitude.”</em></p>
+            <p>Com base nessa definição, explique com suas palavras o que caracteriza um bioma e cite dois exemplos de biomas brasileiros.</p>
+            <textarea id="Q3" placeholder="Digite sua resposta aqui..."></textarea>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-block">
+            <h3>Questão 4 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q4-cerrado.jpg" alt="Cerrado">
+            </div>
+            <p>O Cerrado é o segundo maior bioma do Brasil e abriga uma grande variedade de espécies vegetais e animais. Apesar de sua importância ecológica, esse bioma tem sofrido com ações humanas que colocam sua biodiversidade em risco, como:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q4', 'A')">A) O aumento das chuvas, que alaga grandes áreas do bioma.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q4', 'B')">B) A expansão da agricultura e do pasto, que causa desmatamento e perda de habitat.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q4', 'C')">C) O crescimento natural da vegetação, que dificulta o acesso de animais.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q4', 'D')">D) A construção de represas para proteger espécies da fauna.</button>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-block">
+            <h3>Questão 5 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q5-amazon.jpg" alt="Amazônia">
+            </div>
+            <p>Analise a tabela abaixo que relaciona Bioma, Fauna, Flora e Clima:</p>
+            <table border="1" style="width:100%; border-collapse: collapse; margin-bottom: 10px;">
+                <tr style="background-color: #e8f5e9;">
+                    <th>Bioma</th><th>Fauna</th><th>Flora</th><th>Clima</th>
+                </tr>
+                <tr>
+                    <td class="bioma-col">I</td><td>Onças, macacos, araras, botos, jacarés</td><td>Árvores altas e densas, como castanheiras, seringueiras e embaúbas</td><td>Equatorial: quente, úmido, chuvas abundantes durante o ano todo.</td>
+                </tr>
+                <tr>
+                    <td class="bioma-col">II</td><td>Lobo-guará, tamanduá-bandeira, veado-campeiro</td><td>Árvores tortuosas, gramíneas, arbustos</td><td>Tropical sazonal: duas estações, seca e chuvosa.</td>
+                </tr>
+                <tr>
+                    <td class="bioma-col">III</td><td>Asa-branca, preá, cobra-coral</td><td>Cactos, mandacarus, juazeiros</td><td>Semiárido: quente, seca prolongada e chuvas irregulares.</td>
+                </tr>
+            </table>
+            <p>O bioma correspondente ao bioma I é:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q5', 'A')">A) Caatinga.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q5', 'B')">B) Cerrado.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q5', 'C')">C) Amazônia.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q5', 'D')">D) Pantanal.</button>
+            </div>
+        </div>
+
+        <!-- Questão 6 (Dissertativa) -->
+        <div class="question-block">
+            <h3>Questão 6 (Dissertativa)</h3>
+            <div class="question-image">
+                <img src="assets/q6-caatinga.jpg" alt="Caatinga">
+            </div>
+            <p>A Caatinga é um bioma exclusivamente brasileiro, encontrado principalmente na região Nordeste do país. O nome “caatinga” é de origem tupi-guarani e significa “mata branca”, em alusão à aparência que a vegetação toma quando a água se torna escassa.</p>
+            <p>Considerando essas informações, explique como a vegetação da Caatinga se adapta à escassez de água e por que ela recebe o nome de "mata branca".</p>
+            <textarea id="Q6" placeholder="Digite sua resposta aqui..."></textarea>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-block">
+            <h3>Questão 7 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q7-conservation-area.jpg" alt="Unidade de Conservação">
+            </div>
+            <p>As Unidades de Conservação (UC) são áreas geograficamente definidas que possuem valores ambientais, mas que também possuem grande potencial recreativo, educativo e científico a ser explorado, além de serviços fundamentais para a qualidade de vida. O objetivo principal de uma Unidade de Conservação é:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q7', 'A')">A) Estimular o uso comercial intensivo dos recursos naturais sem restrições ambientais.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q7', 'B')">B) Promover o desenvolvimento urbano e a construção de infraestrutura nas áreas protegidas.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q7', 'C')">C) Substituir áreas naturais por plantações agrícolas para aumentar a produção de alimentos.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q7', 'D')">D) Preservar ecossistemas naturais e proteger a biodiversidade, garantindo a sustentabilidade ambiental.</button>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-block">
+            <h3>Questão 8 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q8-serra-do-mar.jpg" alt="Parque Estadual da Serra do Mar">
+            </div>
+            <p>O Estado de São Paulo possui diversas Unidades de Conservação, como o Parque Estadual da Serra do Mar e o Parque Estadual do Jaraguá. Essas áreas são importantes porque:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q8', 'A')">A) Facilitam a construção de indústrias, promovendo o desenvolvimento econômico local.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q8', 'B')">B) Reduzem os espaços verdes nas cidades, favorecendo a expansão urbana.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q8', 'C')">C) Conservam a biodiversidade e os recursos naturais de biomas como a Mata Atlântica e Cerrado.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q8', 'D')">D) Permitem a exploração comercial intensiva dos recursos naturais para gerar renda imediata.</button>
+            </div>
+        </div>
+
+        <!-- Questão 9 (Dissertativa) -->
+        <div class="question-block">
+            <h3>Questão 9 (Dissertativa)</h3>
+            <div class="question-image">
+                <img src="assets/q9-agriculture.jpg" alt="Agricultura">
+            </div>
+            <p>A agricultura envolve diversos processos e métodos, como o plantio de sementes, o cultivo das plantas e a colheita dos produtos. Essa atividade é essencial para a produção de alimentos que chegam à nossa mesa; contudo, sua prática pode provocar impactos ambientais.</p>
+            <p>Descreva duas práticas agrícolas sustentáveis que podem ser adotadas para minimizar os impactos ambientais causados pela agricultura tradicional.</p>
+            <textarea id="Q9" placeholder="Digite sua resposta aqui..."></textarea>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block">
+            <h3>Questão 10 (Múltipla Escolha)</h3>
+            <div class="question-image">
+                <img src="assets/q10-cerrado-vegetation.jpg" alt="Cerrado">
+            </div>
+            <p>O Cerrado é o segundo maior bioma do Brasil e é conhecido pelo solo com baixa fertilidade natural e longos períodos de seca, o que influencia o tipo de vegetação que cresce nessa região. A vegetação desse bioma é formada por:</p>
+            <div class="alternatives">
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q10', 'A')">A) Vegetação formada principalmente por musgos, líquens e pequenas samambaias.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q10', 'B')">B) Florestas densas e contínuas com árvores altas e copas fechadas.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q10', 'C')">C) Vegetação composta por árvores tortuosas, gramíneas e arbustos.</button>
+                <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q10', 'D')">D) Grandes áreas de campos alagados com vegetação rasteira.</button>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="submit-btn">ENVIAR</button>
+            <button type="button" class="clear-btn" onclick="limparFormulario()">EXCLUIR</button>
+        </div>
+    </form>
+    <div id="feedback" class="feedback"></div>
+</div>
+
+<script>
+    // Dados dos Alunos
+    const alunosData = {
+        "7ºAno A": [
+            { nome: "ÁGATHA CAMPOS DE SOUSA", ra: "123687705", dig: "6", email: "00001236877056SP@al.educacao.sp.gov.br" },
+            { nome: "ALBERT BARROS CARDOSO", ra: "114506468", dig: "1", email: "00001145064681SP@al.educacao.sp.gov.br" },
+            { nome: "ALEXIA LOHANA COSTA DE OLIVEIRA", ra: "115864647", dig: "1", email: "00001158646471SP@al.educacao.sp.gov.br" },
+            { nome: "ANA CAROLINA GONÇALVES NASCIMENTO DE LIMA", ra: "115865010", dig: "3", email: "00001158650103SP@al.educacao.sp.gov.br" },
+            { nome: "ARIANE DIAS SOARES", ra: "115066892", dig: "1", email: "00001150668921sp@al.educacao.sp.gov.br" },
+            { nome: "BRYAN OLLIVER TEIXEIRA RODRIGUES DE SALLES", ra: "116500942", dig: "0", email: "00001165009420sp@al.educacao.sp.gov.br" },
+            { nome: "CRYSTHOPHER PIERRE CAVALCANTE RUBIRA", ra: "121631871", dig: "2", email: "00001216318712sp@al.educacao.sp.gov.br" },
+            { nome: "EMANUELLA RIBEIRO MAFRA", ra: "115069279", dig: "0", email: "00001150692790SP@al.educacao.sp.gov.br" },
+            { nome: "FHELIPE OLIVEIRA CAETANO PEREIRA", ra: "121486283", dig: "4", email: "00001214862834sp@al.educacao.sp.gov.br" },
+            { nome: "GABRIEL CHAVES RAMOS", ra: "112603375", dig: "3", email: "00001126033753SP@al.educacao.sp.gov.br" },
+            { nome: "HENRIQUE VIANA LEITE", ra: "116437860", dig: "0", email: "00001164378600sp@al.educacao.sp.gov.br" },
+            { nome: "ISABELLA DE SOUZA SILVA", ra: "114595973", dig: "8", email: "00001145959738SP@al.educacao.sp.gov.br" },
+            { nome: "ISABELLY SOPHIA VIEIRA LIMA", ra: "121695507", dig: "4", email: "00001216955074sp@al.educacao.sp.gov.br" },
+            { nome: "ISABELLY VITORIA DA SILVA MOREIRA", ra: "114612929", dig: "4", email: "00001146129294SP@al.educacao.sp.gov.br" },
+            { nome: "JÁDINA COELHO ABADE", ra: "115882329", dig: "0", email: "00001158823290SP@al.educacao.sp.gov.br" },
+            { nome: "JEAN PAULO MARTINS DA SILVA", ra: "115882392", dig: "7", email: "00001158823927sp@al.educacao.sp.gov.br" },
+            { nome: "KETTELLEN VITORIA DA SILVA CARDOSO", ra: "115883763", dig: "X", email: "0000115883763XSP@al.educacao.sp.gov.br" },
+            { nome: "LUAN CAIO LOPES DE LIMA", ra: "116528464", dig: "9", email: "00001165284649sp@al.educacao.sp.gov.br" },
+            { nome: "MAYSA CORREIA DE OLIVEIRA", ra: "121491458", dig: "5", email: "00001214914585SP@al.educacao.sp.gov.br" },
+            { nome: "MAYSA FERNANDA DE OLIVEIRA CARVALHO", ra: "116517507", dig: "1", email: "00001165175071sp@al.educacao.sp.gov.br" },
+            { nome: "OTAVIO DO NASCIMENTO CONCEIÇÃO", ra: "122012071", dig: "6", email: "00001220120716SP@al.educacao.sp.gov.br" },
+            { nome: "PEDRO BRANDÃO SANTOS", ra: "123923601", dig: "3", email: "00001239236013SP@al.educacao.sp.gov.br" },
+            { nome: "RAFAELLA VICTORIA ABREU DOS ANJOS", ra: "121483537", dig: "5", email: "00001214835375sp@al.educacao.sp.gov.br" },
+            { nome: "RAPHAEL CORRÊA AZEVEDO", ra: "115889689", dig: "X", email: "0000115889689XSP@al.educacao.sp.gov.br" },
+            { nome: "RYAN FREITAS FERREIRA", ra: "116520668", dig: "7", email: "00001165206687sp@al.educacao.sp.gov.br" },
+            { nome: "SAYMON GABRIEL DE JESUS BARBOSA", ra: "121976177", dig: "1", email: "00001219761771SP@al.educacao.sp.gov.br" },
+            { nome: "YASMIM MANGILI SILVA", ra: "114163728", dig: "5", email: "00001141637285sp@al.educacao.sp.gov.br" },
+            { nome: "YASMIM NOVAES SOARES", ra: "116522578", dig: "5", email: "00001165225785SP@al.educacao.sp.gov.br" },
+            { nome: "YASMIN CRISTINA PEREIRA CORREIA", ra: "116522822", dig: "1", email: "00001165228221SP@al.educacao.sp.gov.br" },
+            { nome: "ANA LUIZA DA SILVA OLIVEIRA", ra: "121028045", dig: "0", email: "00001210280450SP@al.educacao.sp.gov.br" },
+            { nome: "AGATHA DE CAMARGO", ra: "115622979", dig: "0", email: "00001156229790sp@al.educacao.sp.gov.br" }
+        ],
+        "7ºAno B": [
+            { nome: "ABRAÃO JUNIOR SOUSA BATISTA", ra: "116498223", dig: "0", email: "00001164982230sp@al.educacao.sp.gov.br" },
+            { nome: "ALEX ROBERTO BARBOZA DE CARVALHO", ra: "116498448", dig: "2", email: "00001164984482SP@al.educacao.sp.gov.br" },
+            { nome: "AMANDA MARTINS SANTOS DA SILVA", ra: "116498886", dig: "4", email: "00001164988864SP@al.educacao.sp.gov.br" },
+            { nome: "ANA CECILIA LEÃO DE ALMEIDA", ra: "115865028", dig: "0", email: "00001158650280sp@al.educacao.sp.gov.br" },
+            { nome: "BEATRIZ NASCIMENTO ALVES", ra: "116500353", dig: "3", email: "00001165003533SP@al.educacao.sp.gov.br" },
+            { nome: "BRUNO HENRIQUE SERAFIM", ra: "115069759", dig: "3", email: "00001150697593sp@al.educacao.sp.gov.br" },
+            { nome: "DANIEL ROCHA COSTA", ra: "116501654", dig: "0", email: "00001165016540sp@al.educacao.sp.gov.br" },
+            { nome: "ERICK ROBERTO ESTEVAM OLIVEIRA", ra: "116503338", dig: "0", email: "00001165033380sp@al.educacao.sp.gov.br" },
+            { nome: "FELIPE WENDEL GONÇALVES DOS SANTOS", ra: "115069286", dig: "8", email: "00001150692868sp@al.educacao.sp.gov.br" },
+            { nome: "FERNANDA MARCOS SOARES", ra: "115070045", dig: "2", email: "00001150700452SP@al.educacao.sp.gov.br" },
+            { nome: "GUILHERME CAMARGO MOTA", ra: "116504776", dig: "7", email: "00001165047767SP@al.educacao.sp.gov.br" },
+            { nome: "GUILHERME DE BRITO ROCHA", ra: "116504787", dig: "1", email: "00001165047871SP@al.educacao.sp.gov.br" },
+            { nome: "HEDERSON FERNANDO FELIX DE SOUZA", ra: "114155344", dig: "2", email: "00001141553442SP@al.educacao.sp.gov.br" },
+            { nome: "JENIFER MEDEIROS ALVES", ra: "121487942", dig: "1", email: "00001214879421sp@al.educacao.sp.gov.br" },
+            { nome: "JHULIA FERNANDA MENDES", ra: "115882488", dig: "9", email: "00001158824889sp@al.educacao.sp.gov.br" },
+            { nome: "KENNETH BARTHOLOMEW KOSH IV", ra: "121490017", dig: "3", email: "00001214900173sp@al.educacao.sp.gov.br" },
+            { nome: "LARYSSA XAVIER DE SOUZA", ra: "116527633", dig: "1", email: "00001165276331sp@al.educacao.sp.gov.br" },
+            { nome: "LOHANA GABRIELY GONÇALVES DA SILVA", ra: "121489264", dig: "4", email: "00001214892644sp@al.educacao.sp.gov.br" },
+            { nome: "MATHEUS LOPES FERREIRA", ra: "121510406", dig: "6", email: "00001215104066sp@al.educacao.sp.gov.br" },
+            { nome: "MAYRA CORREIA DE OLIVEIRA", ra: "121489178", dig: "0", email: "00001214891780SP@al.educacao.sp.gov.br" },
+            { nome: "MILENA KAROLINE ALVES COSTA", ra: "122967935", dig: "2", email: "00001229679352SP@al.educacao.sp.gov.br" },
+            { nome: "SOPHIA EVANGELISTA COBRA DE CARVALHO", ra: "116536550", dig: "9", email: "00001165365509SP@al.educacao.sp.gov.br" },
+            { nome: "VITOR HUGO GUERREIRO RODRIGUES", ra: "115891495", dig: "7", email: "00001158914957sp@al.educacao.sp.gov.br" },
+            { nome: "MIGUEL DOMINGOS CALIXTO", ra: "120583574", dig: "X", email: "0000120583574XSP@al.educacao.sp.gov.br" }
+        ]
+    };
+
+    const respostas = { Q1: "", Q2: "", Q3: "", Q4: "", Q5: "", Q6: "", Q7: "", Q8: "", Q9: "", Q10: "" };
+
+    // Preenche a data automaticamente ao carregar a página
+    window.onload = function() {
+        const hoje = new Date();
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const ano = hoje.getFullYear();
+        document.getElementById('data').value = `${dia}/${mes}/${ano}`;
+    };
+
+    function carregarAlunos() {
+        const turma = document.getElementById("turma").value;
+        const nomeSelect = document.getElementById("nome");
+        nomeSelect.innerHTML = '<option value="">Selecione o Nome</option>';
+        
+        if (turma && alunosData[turma]) {
+            alunosData[turma].forEach(aluno => {
+                const option = document.createElement("option");
+                option.value = aluno.nome;
+                option.textContent = aluno.nome;
+                nomeSelect.appendChild(option);
+            });
+        }
+        document.getElementById("ra").value = "";
+        document.getElementById("dig_ra").value = "";
+        document.getElementById("email").value = "";
+    }
+
+    function preencherDadosAluno() {
+        const turma = document.getElementById("turma").value;
+        const nome = document.getElementById("nome").value;
+        
+        if (turma && nome && alunosData[turma]) {
+            const aluno = alunosData[turma].find(a => a.nome === nome);
+            if (aluno) {
+                document.getElementById("ra").value = aluno.ra;
+                document.getElementById("dig_ra").value = aluno.dig;
+                document.getElementById("email").value = aluno.email;
+            }
+        }
+    }
+
+    function selecionarAlternativa(btn, questao, alternativa) {
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.alternative-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        respostas[questao] = alternativa;
+    }
+
+    function capturarDissertativas() {
+        respostas.Q3 = document.getElementById("Q3").value;
+        respostas.Q6 = document.getElementById("Q6").value;
+        respostas.Q9 = document.getElementById("Q9").value;
+    }
+
+    function limparFormulario() {
+        if (confirm("Tem certeza que deseja excluir todas as respostas?")) {
+            document.getElementById("provaForm").reset();
+            document.querySelectorAll('.alternative-btn').forEach(b => b.classList.remove('selected'));
+            for (let key in respostas) {
+                respostas[key] = "";
+            }
+            document.getElementById("ra").value = "";
+            document.getElementById("dig_ra").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("feedback").style.display = "none";
+        }
+    }
+
+    function enviarRespostas(event) {
+        event.preventDefault();
+        capturarDissertativas();
+        
+        const turma = document.getElementById("turma").value;
+        const nome = document.getElementById("nome").value;
+        const ra = document.getElementById("ra").value;
+        const email = document.getElementById("email").value;
+        const data = document.getElementById("data").value;
+
+        if (!turma || !nome) {
+            alert("Por favor, selecione a Turma e o Nome do Aluno.");
+            return;
+        }
+
+        for (let key in respostas) {
+            if (respostas[key] === "") {
+                alert("Por favor, responda todas as questões antes de enviar.");
+                return;
+            }
+        }
+
+        const dadosEnvio = {
+            turma: turma,
+            nome: nome,
+            ra: ra,
+            email: email,
+            data: data,
+            respostas: respostas
+        };
+
+        google.script.run
+            .withSuccessHandler(function(response) {
+                document.getElementById("feedback").style.display = "block";
+                document.getElementById("feedback").className = "feedback success";
+                document.getElementById("feedback").innerText = "Prova enviada com sucesso! Obrigado, " + nome + ".";
+                document.getElementById("provaForm").reset();
+                document.querySelectorAll('.alternative-btn').forEach(b => b.classList.remove('selected'));
+                respostas.Q1 = ""; respostas.Q2 = ""; respostas.Q4 = ""; respostas.Q5 = ""; respostas.Q7 = ""; respostas.Q8 = ""; respostas.Q10 = "";
+                document.getElementById("ra").value = "";
+                document.getElementById("dig_ra").value = "";
+                document.getElementById("email").value = "";
+            })
+            .withFailureHandler(function(error) {
+                document.getElementById("feedback").style.display = "block";
+                document.getElementById("feedback").className = "feedback error";
+                document.getElementById("feedback").innerText = "Erro ao enviar. Tente novamente.";
+            })
+            .processarRespostas(dadosEnvio);
+    }
+</script>
+
+</body>
+</html>
