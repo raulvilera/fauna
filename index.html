@@ -80,7 +80,7 @@
             margin-bottom: 5px;
             color: #1b5e20;
         }
-        .student-info select, .student-info input {
+        .student-info select, .student-info input, .student-info textarea {
             width: 100%;
             max-width: 100%;
             min-width: 0;
@@ -93,6 +93,14 @@
         .student-info input {
             background-color: #f1f8e9;
             color: #555;
+        }
+        .student-info textarea {
+            display: block;
+            background-color: #f1f8e9;
+            color: #555;
+            resize: none;
+            overflow-wrap: anywhere;
+            line-height: 1.35;
         }
         
         .question-block {
@@ -271,7 +279,8 @@
             }
 
             .student-info select,
-            .student-info input {
+            .student-info input,
+            .student-info textarea {
                 font-size: 16px;
             }
 
@@ -311,19 +320,19 @@
         </div>
         <div>
             <label for="ra">RA:</label>
-            <input type="text" id="ra" readonly placeholder="Preenchido automaticamente">
+            <textarea id="ra" rows="1" readonly placeholder="Preenchido automaticamente"></textarea>
         </div>
         <div>
             <label for="dig_ra">Dig. RA:</label>
-            <input type="text" id="dig_ra" readonly placeholder="Preenchido automaticamente">
+            <textarea id="dig_ra" rows="1" readonly placeholder="Preenchido automaticamente"></textarea>
         </div>
         <div>
             <label for="email">E-mail Institucional:</label>
-            <input type="text" id="email" readonly placeholder="Preenchido automaticamente">
+            <textarea id="email" rows="2" readonly placeholder="Preenchido automaticamente"></textarea>
         </div>
         <div>
             <label for="data">Data:</label>
-            <input type="text" id="data" readonly>
+            <textarea id="data" rows="1" readonly></textarea>
         </div>
     </div>
 
