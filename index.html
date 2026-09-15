@@ -80,7 +80,7 @@
             margin-bottom: 5px;
             color: #1b5e20;
         }
-        .student-info select, .student-info input, .student-info textarea {
+        .student-info select, .student-info input {
             width: 100%;
             max-width: 100%;
             min-width: 0;
@@ -94,13 +94,11 @@
             background-color: #f1f8e9;
             color: #555;
         }
-        .student-info textarea {
-            display: block;
-            background-color: #f1f8e9;
-            color: #555;
-            resize: none;
-            overflow-wrap: anywhere;
-            line-height: 1.35;
+        #nome {
+            font-size: clamp(12px, 2.2vw, 16px);
+        }
+        #email {
+            font-size: clamp(10px, 1.8vw, 14px);
         }
         
         .question-block {
@@ -264,24 +262,29 @@
             }
 
             .student-info {
-                grid-template-columns: minmax(0, 1fr);
+                grid-template-columns: repeat(12, minmax(0, 1fr));
                 gap: 12px;
                 padding: 14px;
             }
 
-            .student-info > div:nth-child(1),
-            .student-info > div:nth-child(2),
-            .student-info > div:nth-child(3),
-            .student-info > div:nth-child(4),
-            .student-info > div:nth-child(5),
-            .student-info > div:nth-child(6) {
-                grid-column: 1 / -1;
-            }
+            .student-info > div:nth-child(1) { grid-column: span 4; }
+            .student-info > div:nth-child(2) { grid-column: span 8; }
+            .student-info > div:nth-child(3) { grid-column: span 8; }
+            .student-info > div:nth-child(4) { grid-column: span 4; }
+            .student-info > div:nth-child(5) { grid-column: 1 / -1; }
+            .student-info > div:nth-child(6) { grid-column: span 4; }
 
             .student-info select,
-            .student-info input,
-            .student-info textarea {
+            .student-info input {
                 font-size: 16px;
+            }
+
+            #nome {
+                font-size: clamp(12px, 3.8vw, 16px);
+            }
+
+            #email {
+                font-size: clamp(10px, 3vw, 14px);
             }
 
             .biome-table {
@@ -320,19 +323,19 @@
         </div>
         <div>
             <label for="ra">RA:</label>
-            <textarea id="ra" rows="1" readonly placeholder="Preenchido automaticamente"></textarea>
+            <input type="text" id="ra" readonly placeholder="Preenchido automaticamente">
         </div>
         <div>
             <label for="dig_ra">Dig. RA:</label>
-            <textarea id="dig_ra" rows="1" readonly placeholder="Preenchido automaticamente"></textarea>
+            <input type="text" id="dig_ra" readonly placeholder="Preenchido automaticamente">
         </div>
         <div>
             <label for="email">E-mail Institucional:</label>
-            <textarea id="email" rows="2" readonly placeholder="Preenchido automaticamente"></textarea>
+            <input type="text" id="email" readonly placeholder="Preenchido automaticamente">
         </div>
         <div>
             <label for="data">Data:</label>
-            <textarea id="data" rows="1" readonly></textarea>
+            <input type="text" id="data" readonly>
         </div>
     </div>
 
