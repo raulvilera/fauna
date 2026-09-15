@@ -214,6 +214,57 @@
             text-align: center;
             font-weight: bold;
         }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 10px;
+        }
+
+        .biome-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 0;
+        }
+
+        .biome-table th,
+        .biome-table td {
+            padding: 8px;
+            vertical-align: middle;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .biome-table th:first-child,
+        .biome-table td:first-child {
+            width: 12%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 16px 12px;
+                border-radius: 8px;
+            }
+
+            .question-block {
+                padding: 12px;
+            }
+
+            .biome-table {
+                font-size: 14px;
+            }
+
+            .biome-table th,
+            .biome-table td {
+                padding: 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -326,7 +377,8 @@
                 <img src="assets/q5-amazon.jpg" alt="Amazônia">
             </div>
             <p>Analise a tabela abaixo que relaciona Bioma, Fauna, Flora e Clima:</p>
-            <table border="1" style="width:100%; border-collapse: collapse; margin-bottom: 10px;">
+            <div class="table-responsive" role="region" aria-label="Tabela de biomas" tabindex="0">
+            <table class="biome-table" border="1">
                 <tr style="background-color: #e8f5e9;">
                     <th>Bioma</th><th>Fauna</th><th>Flora</th><th>Clima</th>
                 </tr>
@@ -340,6 +392,7 @@
                     <td class="bioma-col">III</td><td>Asa-branca, preá, cobra-coral</td><td>Cactos, mandacarus, juazeiros</td><td>Semiárido: quente, seca prolongada e chuvas irregulares.</td>
                 </tr>
             </table>
+            </div>
             <p>O bioma correspondente ao bioma I é:</p>
             <div class="alternatives">
                 <button type="button" class="alternative-btn" onclick="selecionarAlternativa(this, 'Q5', 'A')">A) Caatinga.</button>
