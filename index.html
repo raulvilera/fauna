@@ -54,28 +54,25 @@
             font-weight: 500;
         }
         
-        /* ALTERAÇÃO: Grid de 7 colunas para ajustar as larguras proporcionalmente */
         .student-info {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(12, minmax(0, 1fr));
             gap: 15px;
             background: #e8f5e9;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
         }
-        /* Turma: 1/7 */
-        .student-info > div:nth-child(1) { grid-column: span 1; }
-        /* Nome: 6/7 (espaço ideal para nomes longos) */
-        .student-info > div:nth-child(2) { grid-column: span 6; }
-        /* RA: 5/7 (reduzido para ficar proporcional aos 9 dígitos) */
-        .student-info > div:nth-child(3) { grid-column: span 5; }
-        /* Dig. RA: 2/7 (levemente maior, mas ainda compacto) */
-        .student-info > div:nth-child(4) { grid-column: span 2; }
-        /* E-mail: 5/7 (ajustado para manter a linha equilibrada) */
-        .student-info > div:nth-child(5) { grid-column: span 5; }
-        /* Data: 2/7 (aumentado para caber "14/09/2026" sem cortar) */
-        .student-info > div:nth-child(6) { grid-column: span 2; }
+        /* O nome recebe a maior área e todos os itens podem encolher sem estourar a tela. */
+        .student-info > div {
+            min-width: 0;
+        }
+        .student-info > div:nth-child(1) { grid-column: span 3; }
+        .student-info > div:nth-child(2) { grid-column: span 9; }
+        .student-info > div:nth-child(3) { grid-column: span 7; }
+        .student-info > div:nth-child(4) { grid-column: span 5; }
+        .student-info > div:nth-child(5) { grid-column: span 7; }
+        .student-info > div:nth-child(6) { grid-column: span 5; }
 
         .student-info label {
             font-weight: bold;
@@ -85,6 +82,8 @@
         }
         .student-info select, .student-info input {
             width: 100%;
+            max-width: 100%;
+            min-width: 0;
             padding: 10px;
             border: 1px solid #a5d6a7;
             border-radius: 6px;
@@ -254,6 +253,26 @@
 
             .question-block {
                 padding: 12px;
+            }
+
+            .student-info {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+                padding: 14px;
+            }
+
+            .student-info > div:nth-child(1),
+            .student-info > div:nth-child(2),
+            .student-info > div:nth-child(3),
+            .student-info > div:nth-child(4),
+            .student-info > div:nth-child(5),
+            .student-info > div:nth-child(6) {
+                grid-column: 1 / -1;
+            }
+
+            .student-info select,
+            .student-info input {
+                font-size: 16px;
             }
 
             .biome-table {
